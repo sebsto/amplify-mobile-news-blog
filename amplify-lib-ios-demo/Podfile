@@ -13,7 +13,6 @@ target 'amplify-lib-ios-demo' do
     pod 'AWSPluginsCore', :git => 'https://github.com/aws-amplify/amplify-ios.git', :branch => 'master'
     pod 'AmplifyPlugins/AWSAPIPlugin', :git => 'https://github.com/aws-amplify/amplify-ios.git', :branch => 'master'
     pod 'AmplifyPlugins/AWSDataStorePlugin', :git => 'https://github.com/aws-amplify/amplify-ios.git', :branch => 'master'
-    pod 'AmplifyPlugins/AWSAuthPlugin', :git => 'https://github.com/aws-amplify/amplify-ios.git', :branch => 'master'
-#    pod 'AWSPredictionsPlugin', :git => 'https://github.com/aws-amplify/amplify-ios.git', :branch => 'master'
+    pod 'AmplifyPlugins/AWSCognitoAuthPlugin', :git => 'https://github.com/aws-amplify/amplify-ios.git', :branch => 'master'
 
 end

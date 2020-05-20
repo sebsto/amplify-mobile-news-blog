@@ -19,22 +19,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         do {
             try Amplify.add(plugin: AWSAPIPlugin())
             try Amplify.add(plugin: AWSDataStorePlugin(modelRegistration: AmplifyModels()))
-            try Amplify.add(plugin: AWSAuthPlugin())
+            try Amplify.add(plugin: AWSCognitoAuthPlugin())
+
             try Amplify.configure()
             print("Amplify initialized")
             
+            // see https://github.com/aws-amplify/amplify-ios/blob/master/Amplify/Categories/Auth/Models/AuthEventName.swift
             _ = Amplify.Hub.listen(to: .auth) { (payload) in
                 switch payload.eventName {
-                case HubPayload.EventName.Auth.webUISignIn:
+                case HubPayload.EventName.Auth.signedIn:
                     print("==HUB== User signed In, update UI")
-                case HubPayload.EventName.Auth.signOut:
-                    print("==HUB== User sign Out")
                 case HubPayload.EventName.Auth.signedOut:
                     print("==HUB== User signed Out, update UI")
                 case HubPayload.EventName.Auth.sessionExpired:
                     print("==HUB== Session expired, show sign in aui")
-                case HubPayload.EventName.Auth.fetchUserAttributes:
-                    print("==HUB== userAttributes are available, update UI")
                 default:
                     print("==HUB== \(payload)")
                     break
