@@ -1,0 +1,19 @@
+# Uncomment the next line to define a global platform for your project
+ platform :ios, '13.0'
+
+target 'amplify-lib-ios-demo' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+
+  # Pods for amplify-lib-ios-demo
+    pod 'amplify-tools'
+
+    pod 'Amplify', :git => 'https://github.com/aws-amplify/amplify-ios.git', :branch => 'master'
+    pod 'Amplify/Tools', :git => 'https://github.com/aws-amplify/amplify-ios.git', :branch => 'master'
+    pod 'AWSPluginsCore', :git => 'https://github.com/aws-amplify/amplify-ios.git', :branch => 'master'
+    pod 'AmplifyPlugins/AWSAPIPlugin', :git => 'https://github.com/aws-amplify/amplify-ios.git', :branch => 'master'
+    pod 'AmplifyPlugins/AWSDataStorePlugin', :git => 'https://github.com/aws-amplify/amplify-ios.git', :branch => 'master'
+    pod 'AmplifyPlugins/AWSAuthPlugin', :git => 'https://github.com/aws-amplify/amplify-ios.git', :branch => 'master'
+#    pod 'AWSPredictionsPlugin', :git => 'https://github.com/aws-amplify/amplify-ios.git', :branch => 'master'
+
+end

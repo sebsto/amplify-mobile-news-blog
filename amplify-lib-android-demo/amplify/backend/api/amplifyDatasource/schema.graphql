@@ -1,0 +1,12 @@
+enum Priority {
+  LOW
+  NORMAL
+  HIGH
+}
+
+type Todo @model {
+  id: ID!
+  name: String!
+  priority: Priority
+  description: String
+}

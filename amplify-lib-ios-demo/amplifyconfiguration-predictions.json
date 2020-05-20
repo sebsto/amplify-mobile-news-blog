@@ -1,0 +1,75 @@
+{
+    "api": {
+        "plugins": {
+            "awsAPIPlugin": {
+                "amplifyDatasource": {
+                    "endpointType": "GraphQL",
+                    "endpoint": "https://ntlm2nuyfnboxetkxrqw3zwnhu.appsync-api.eu-west-1.amazonaws.com/graphql",
+                    "region": "eu-west-1",
+                    "authorizationType": "API_KEY",
+                    "apiKey": "da2-vwcl4tyqm5ajtmrsp4b24tkv7e"
+                }
+            }
+        }
+    },
+    "predictions": {
+      "plugins": {
+        "awsPredictionsPlugin": {
+          "defaultRegion": "eu-west-1",
+          "convert": {
+            "translateText": {
+              "targetLang": "fr",
+              "sourceLang": "en",
+              "region": "eu-west-1",
+              "defaultNetworkPolicy": "auto"
+            }
+          }
+        }
+      }
+    },
+    "auth": {
+      "plugins": {
+        "awsCognitoAuthPlugin": {
+
+
+          "CredentialsProvider": {
+            "CognitoIdentity": {
+              "Default": {
+                "PoolId": "eu-west-1:f189c859-a3eb-4024-9263-4469d0e291e0",
+                "Region": "eu-west-1"
+              }
+            }
+          },
+          "CognitoUserPool": {
+            "Default": {
+              "PoolId": "eu-west-1_Y2lvSONUG",
+              "AppClientId": "2f06sqf95s2o32e20cqoo46gkl",
+              "AppClientSecret": "10c6silsqcuu3fsp6ulnld7j628v5a5pi67d6p68sn0mk7n9iucr",
+              "Region": "eu-west-1"
+            }
+          },
+          "Auth": {
+            "Default": {
+              "OAuth": {
+                "WebDomain": "news-blog-demo-amplify.auth.eu-west-1.amazoncognito.com",
+                "AppClientId": "2f06sqf95s2o32e20cqoo46gkl",
+                "AppClientSecret": "10c6silsqcuu3fsp6ulnld7j628v5a5pi67d6p68sn0mk7n9iucr",
+                "SignInRedirectURI": "myapp://callback/",
+                "SignOutRedirectURI": "myapp://callback/",
+                "Scopes": [
+                  "phone",
+                  "email",
+                  "openid",
+                  "profile",
+                  "aws.cognito.signin.user.admin"
+                ]
+              },
+              "authenticationFlowType": "USER_SRP_AUTH"
+            }
+          }
+
+
+        }
+      }
+    }
+}

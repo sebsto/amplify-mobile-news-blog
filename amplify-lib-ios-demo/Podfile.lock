@@ -1,0 +1,100 @@
+PODS:
+  - Amplify (0.11.0):
+    - Amplify/Default (= 0.11.0)
+  - amplify-tools (0.2.0)
+  - Amplify/Default (0.11.0)
+  - Amplify/Tools (0.11.0)
+  - AmplifyPlugins/AWSAPIPlugin (0.11.0):
+    - AppSyncRealTimeClient (~> 1.1.0)
+    - AWSPluginsCore (= 0.11.0)
+    - ReachabilitySwift (~> 5.0.0)
+  - AmplifyPlugins/AWSAuthPlugin (0.11.0):
+    - AWSMobileClient (~> 2.13.0)
+    - AWSPluginsCore (= 0.11.0)
+  - AmplifyPlugins/AWSDataStorePlugin (0.11.0):
+    - AWSPluginsCore (= 0.11.0)
+    - SQLite.swift (~> 0.12.0)
+  - AppSyncRealTimeClient (1.1.6):
+    - Starscream (= 3.0.6)
+  - AWSAuthCore (2.13.3):
+    - AWSCore (= 2.13.3)
+  - AWSCognitoIdentityProvider (2.13.3):
+    - AWSCognitoIdentityProviderASF (= 1.0.1)
+    - AWSCore (= 2.13.3)
+  - AWSCognitoIdentityProviderASF (1.0.1)
+  - AWSCore (2.13.3)
+  - AWSMobileClient (2.13.3):
+    - AWSAuthCore (= 2.13.3)
+    - AWSCognitoIdentityProvider (= 2.13.3)
+  - AWSPluginsCore (0.11.0):
+    - Amplify (= 0.11.0)
+    - AWSCore (~> 2.13.0)
+    - AWSMobileClient (~> 2.13.0)
+  - ReachabilitySwift (5.0.0)
+  - SQLite.swift (0.12.2):
+    - SQLite.swift/standard (= 0.12.2)
+  - SQLite.swift/standard (0.12.2)
+  - Starscream (3.0.6)
+
+DEPENDENCIES:
+  - Amplify (from `https://github.com/aws-amplify/amplify-ios.git`, branch `master`)
+  - amplify-tools
+  - Amplify/Tools (from `https://github.com/aws-amplify/amplify-ios.git`, branch `master`)
+  - AmplifyPlugins/AWSAPIPlugin (from `https://github.com/aws-amplify/amplify-ios.git`, branch `master`)
+  - AmplifyPlugins/AWSAuthPlugin (from `https://github.com/aws-amplify/amplify-ios.git`, branch `master`)
+  - AmplifyPlugins/AWSDataStorePlugin (from `https://github.com/aws-amplify/amplify-ios.git`, branch `master`)
+  - AWSPluginsCore (from `https://github.com/aws-amplify/amplify-ios.git`, branch `master`)
+
+SPEC REPOS:
+  trunk:
+    - amplify-tools
+    - AppSyncRealTimeClient
+    - AWSAuthCore
+    - AWSCognitoIdentityProvider
+    - AWSCognitoIdentityProviderASF
+    - AWSCore
+    - AWSMobileClient
+    - ReachabilitySwift
+    - SQLite.swift
+    - Starscream
+
+EXTERNAL SOURCES:
+  Amplify:
+    :branch: master
+    :git: https://github.com/aws-amplify/amplify-ios.git
+  AmplifyPlugins:
+    :branch: master
+    :git: https://github.com/aws-amplify/amplify-ios.git
+  AWSPluginsCore:
+    :branch: master
+    :git: https://github.com/aws-amplify/amplify-ios.git
+
+CHECKOUT OPTIONS:
+  Amplify:
+    :commit: 71b1cb3774f489d2803b0226635dee90d9781484
+    :git: https://github.com/aws-amplify/amplify-ios.git
+  AmplifyPlugins:
+    :commit: 71b1cb3774f489d2803b0226635dee90d9781484
+    :git: https://github.com/aws-amplify/amplify-ios.git
+  AWSPluginsCore:
+    :commit: 71b1cb3774f489d2803b0226635dee90d9781484
+    :git: https://github.com/aws-amplify/amplify-ios.git
+
+SPEC CHECKSUMS:
+  Amplify: 6f32b5dbc7890d9671d60d5badd2cc94e2dfd329
+  amplify-tools: 2304ea0782b61fdb15c7a1e6bf5e0410b02b4f46
+  AmplifyPlugins: 5f238a00613a63865a23bd51bf8bab5546317ea4
+  AppSyncRealTimeClient: 4a2ccdc1722750a1f4d76e216f9bfb1cf12f10de
+  AWSAuthCore: 93b71ac38596e75790015c7299c725bb09ae1d5f
+  AWSCognitoIdentityProvider: 3480819d983e78eda7a43e141273756784be30cb
+  AWSCognitoIdentityProviderASF: f94f1a502e72ef3d0a1de93e10bf7a79c8698118
+  AWSCore: fc361166b595e3c0183c55987743b295646c39d2
+  AWSMobileClient: 9149b664d1a89279bd49d36598c7afc38a63d7d1
+  AWSPluginsCore: 74531b9ce19b89c938e96df77608f368affc8857
+  ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
+  SQLite.swift: d2b4642190917051ce6bd1d49aab565fe794eea3
+  Starscream: ef3ece99d765eeccb67de105bfa143f929026cf5
+
+PODFILE CHECKSUM: dfaaec15e63bdee7ad806115280ebd14727f9105
+
+COCOAPODS: 1.9.1

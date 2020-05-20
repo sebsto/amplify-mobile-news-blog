@@ -1,0 +1,9 @@
+{
+    "projectName": "amplify-sdk-ios-demo",
+    "version": "3.0",
+    "frontend": "ios",
+
+    "providers": [
+        "awscloudformation"
+    ]
+}
