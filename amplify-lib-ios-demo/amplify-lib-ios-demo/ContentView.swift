@@ -43,6 +43,10 @@ struct MyAppButton: View {
 }
 
 struct ContentView: View {
+    
+    @ObservedObject public var user : UserData
+    @State private var toBeTranslated: String = ""
+
     let app = UIApplication.shared.delegate as! AppDelegate
     
     var body: some View {
@@ -66,6 +70,33 @@ struct ContentView: View {
                         icon: "doc.text.magnifyingglass",
                         text: "Query")
 
+            
+            TextField("Text to translate (english)", text: $toBeTranslated)
+                .padding()
+                .cornerRadius(4.0)
+                .background(Color(UIColor.systemFill))
+                .padding(EdgeInsets(top: 0, leading: 0, bottom: 15, trailing: 0))
+            
+            Button(action: {
+                // What to perform
+                self.app.translate(text: self.toBeTranslated)
+            }) {
+                // How the button looks like
+                HStack {
+                    Image(systemName: "t.bubble")
+                        .font(.subheadline)
+                    Text("Translate")
+                        .font(.subheadline)
+                }
+                .font(.title)
+                .padding()
+                .overlay(
+                    RoundedRectangle(cornerRadius: 5)
+                        .stroke(Color.accentColor, lineWidth: 3)
+                )
+            }
+
+            Text(user.translatedText).bold().font(.subheadline)
         }
 
     }
@@ -73,6 +104,7 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        let app = UIApplication.shared.delegate as! AppDelegate
+        return ContentView(user: app.data)
     }
 }

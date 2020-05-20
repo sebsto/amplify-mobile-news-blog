@@ -10,17 +10,25 @@ import UIKit
 
 import Amplify
 import AmplifyPlugins
+import AWSPredictionsPlugin
+
+class UserData: ObservableObject {
+    @Published var translatedText = ""
+}
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+    
+    public let data = UserData()
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         do {
             try Amplify.add(plugin: AWSAPIPlugin())
             try Amplify.add(plugin: AWSDataStorePlugin(modelRegistration: AmplifyModels()))
             try Amplify.add(plugin: AWSCognitoAuthPlugin())
-
+            try Amplify.add(plugin: AWSPredictionsPlugin())
+            
             try Amplify.configure()
             print("Amplify initialized")
             
@@ -112,6 +120,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             switch $0 {
             case .success:
                 print("Added note")
+            case .failure(let error):
+                print("Error adding note - \(error.localizedDescription)")
+            }
+        }
+    }
+
+    // MARK: Amplify Predictions
+    
+    func translate(text: String) {
+        _ = Amplify.Predictions.convert(textToTranslate: text, language: LanguageType.english, targetLanguage: LanguageType.french) {
+            switch $0 {
+            case .success(let result):
+                // update UI on main thread 
+                DispatchQueue.main.async() {
+                    self.data.translatedText = result.text
+                }
             case .failure(let error):
                 print("Error adding note - \(error.localizedDescription)")
             }
