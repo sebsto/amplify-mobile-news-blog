@@ -29,14 +29,14 @@
             android:id="@+id/create"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="createTodo"
+            android:onClick="createNote"
             android:text="Create" />
 
         <Button
             android:id="@+id/query"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="queryTodo"
+            android:onClick="queryNotes"
             android:text="Query" />
 
         <EditText
