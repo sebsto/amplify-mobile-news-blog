@@ -6,14 +6,11 @@ target 'amplify-lib-ios-demo' do
   use_frameworks!
 
   # Pods for amplify-lib-ios-demo
-    pod 'amplify-tools'
-
-    pod 'Amplify', :git => 'https://github.com/aws-amplify/amplify-ios.git', :branch => 'master'
-    pod 'Amplify/Tools', :git => 'https://github.com/aws-amplify/amplify-ios.git', :branch => 'master'
-    pod 'AWSPluginsCore', :git => 'https://github.com/aws-amplify/amplify-ios.git', :branch => 'master'
-    pod 'AmplifyPlugins/AWSAPIPlugin', :git => 'https://github.com/aws-amplify/amplify-ios.git', :branch => 'master'
-    pod 'AmplifyPlugins/AWSDataStorePlugin', :git => 'https://github.com/aws-amplify/amplify-ios.git', :branch => 'master'
-    pod 'AmplifyPlugins/AWSCognitoAuthPlugin', :git => 'https://github.com/aws-amplify/amplify-ios.git', :branch => 'master'
-    pod 'AWSPredictionsPlugin', :git => 'https://github.com/aws-amplify/amplify-ios.git', :branch => 'master'
+    pod 'Amplify', '1.0.0-rc.1'
+    pod 'Amplify/Tools', '1.0.0-rc.1'
+    pod 'AmplifyPlugins/AWSAPIPlugin', '1.0.0-rc.1'
+    pod 'AmplifyPlugins/AWSDataStorePlugin', '1.0.0-rc.1'
+    pod 'AmplifyPlugins/AWSCognitoAuthPlugin', '1.0.0-rc.1'
+    pod 'AWSPredictionsPlugin', '1.0.0-rc.1'
 
 end

@@ -1,0 +1,4 @@
+push=false
+modelgen=false
+profile=default
+envName=amplify

@@ -24,6 +24,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         do {
+//            Amplify.Logging.logLevel = .info
+            
             try Amplify.add(plugin: AWSAPIPlugin())
             try Amplify.add(plugin: AWSDataStorePlugin(modelRegistration: AmplifyModels()))
             try Amplify.add(plugin: AWSCognitoAuthPlugin())
@@ -115,7 +117,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         df.dateFormat = "HH:mm"
         let dateString = df.string(from: date)
 
-        let note = Note(content: "--\(dateString)-- content")
+        let note = Note(content: "--\(dateString)-- Build iOS Application")
         Amplify.DataStore.save(note) {
             switch $0 {
             case .success:
