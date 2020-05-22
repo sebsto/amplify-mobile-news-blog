@@ -13,20 +13,16 @@ import com.amazonaws.newsblog.myapp.ui.main.MainFragment
 import com.amplifyframework.AmplifyException
 import com.amplifyframework.api.aws.AWSApiPlugin
 import com.amplifyframework.auth.AuthException
-import com.amplifyframework.auth.AuthSession
 import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin
 import com.amplifyframework.auth.result.AuthSignInResult
 import com.amplifyframework.core.Amplify
-import com.amplifyframework.core.Consumer
 import com.amplifyframework.datastore.AWSDataStorePlugin
-import com.amplifyframework.datastore.generated.model.Priority
-import com.amplifyframework.datastore.generated.model.Todo
+import com.amplifyframework.datastore.generated.model.Note
 import com.amplifyframework.hub.HubChannel
 import com.amplifyframework.hub.HubEvent
 import com.amplifyframework.predictions.aws.AWSPredictionsPlugin
 import com.amplifyframework.predictions.models.LanguageType
-import okhttp3.internal.notify
-import kotlin.reflect.typeOf
+
 
 // https://gist.github.com/TrekSoft/33190858041e6e0810d1324735bb0666
 
@@ -107,46 +103,36 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun createTodo(view: View?) {
-        Log.i(TAG, "Creating Todo")
+    fun createNote(view: View?) {
+        Log.i(TAG, "Creating Note")
         val c = Calendar.getInstance()
 
         val hour = c.get(Calendar.HOUR_OF_DAY)
         val minute = c.get(Calendar.MINUTE)
 
-        val item: Todo = Todo.builder()
-            .name("--$hour:$minute-- Build Android application")
-            .description("Build an Android Application using Amplify")
+        val item: Note = Note.builder()
+            .content("--$hour:$minute-- Build Android application")
             .build()
 
         Amplify.DataStore.save(
             item,
-            { success -> Log.i(TAG, "Saved item: " + success.item.name) },
+            { success -> Log.i(TAG, "Saved item: " + success.item.content) },
             { error -> Log.e(TAG, "Could not save item to DataStore", error) }
         )
     }
 
-    fun queryTodo(view: View?) {
-        Log.i(TAG, "Querying Todos")
+    fun queryNotes(view: View?) {
+        Log.i(TAG, "Querying Notes")
         Amplify.DataStore.query(
-            Todo::class.java,
-            { todos ->
-                while (todos.hasNext()) {
-                    val todo = todos.next()
-                    val name = todo.name;
-                    val priority: Priority? = todo.priority
-                    val description: String? = todo.description
+            Note::class.java,
+            { notes ->
+                while (notes.hasNext()) {
+                    val note = notes.next()
+                    val name = note.content;
 
-                    Log.i(TAG, "==== Todo ====")
+                    Log.i(TAG, "==== Note ====")
                     Log.i(TAG, "Name: $name")
 
-                    if (priority != null) {
-                        Log.i(TAG, "Priority: $priority")
-                    }
-
-                    if (description != null) {
-                        Log.i(TAG, "Description: $description")
-                    }
                 }
             },
             { failure -> Log.e(TAG, "Could not query DataStore", failure) }
