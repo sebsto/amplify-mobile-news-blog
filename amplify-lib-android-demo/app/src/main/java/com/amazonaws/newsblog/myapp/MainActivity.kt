@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
             Amplify.addPlugin(AWSDataStorePlugin())
             Amplify.addPlugin(AWSApiPlugin())
             Amplify.addPlugin(AWSCognitoAuthPlugin())
-            Amplify.addPlugin((AWSPredictionsPlugin()))
+            Amplify.addPlugin(AWSPredictionsPlugin())
             Amplify.configure(applicationContext)
 
             Log.i(TAG, "Initialized Amplify")
