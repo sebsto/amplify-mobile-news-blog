@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AuthenticationServices
 
 import Amplify
 import AmplifyPlugins
@@ -34,6 +35,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             try Amplify.configure()
             print("Amplify initialized")
             
+            // listen to auth events. In a real project, you would update the UI
+            // based on auth status
             // see https://github.com/aws-amplify/amplify-ios/blob/master/Amplify/Categories/Auth/Models/AuthEventName.swift
             _ = Amplify.Hub.listen(to: .auth) { (payload) in
                 switch payload.eventName {
@@ -48,6 +51,42 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     break
                 }
             }
+            
+            // listen to data store subscriptions
+            // test subscriptions using the AppSync Console
+            // Query Notes
+            /**
+                query GetNotes {
+                listNotes {
+                    items {
+                        id
+                        content
+                        _deleted
+                    }
+                }
+            */
+            
+            // Mutate a note to trigger a subscription
+            /**
+             mutation CreateNote {
+                 createNote(
+                     input: {
+                     content: "Added through AppSync Console"
+                     }
+                 ) {
+                     id,
+                     content,
+                     _version,
+                     _lastChangedAt,
+                 }
+             }
+             */
+            _ = Amplify.DataStore.publisher(for: Note.self)
+            .sink(receiveCompletion: { completion in
+                print("Subscription has been completed: \(completion)")
+            }, receiveValue: { mutationEvent in
+                print("Subscription got this value: \(mutationEvent)")
+            })
             
         } catch {
             print("Failed to configure Amplify \(error)")
@@ -87,15 +126,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print(result)
             switch(result) {
             case .success():
-                print("Signout succeded, clearing cache")
-                //to remove cache from UIWebview (not enough not clear Cognito Auth) :-(
-//                URLCache.shared.removeAllCachedResponses()
-//                if let cookies = HTTPCookieStorage.shared.cookies {
-//                    for cookie in cookies {
-//                        print(cookie)
-//                        HTTPCookieStorage.shared.deleteCookie(cookie)
-//                    }
-//                }
+                print("Signout succeded")
             case .failure(let error):
                 print("Signout failed with \(error)")
             }
