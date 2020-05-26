@@ -1,8 +1,8 @@
 {
-    "identityPoolName": "amplifysdkandroiddemo795a0a3e_identitypool_795a0a3e",
-    "allowUnauthenticatedIdentities": true,
-    "resourceNameTruncated": "amplif795a0a3e",
-    "userPoolName": "amplifysdkandroiddemo795a0a3e_userpool_795a0a3e",
+    "identityPoolName": "amplifylibiosdemo49321cce_identitypool_49321cce",
+    "allowUnauthenticatedIdentities": false,
+    "resourceNameTruncated": "amplif49321cce",
+    "userPoolName": "amplifylibiosdemo49321cce_userpool_49321cce",
     "autoVerifiedAttributes": [
         "email"
     ],
@@ -28,10 +28,10 @@
     "userpoolClientReadAttributes": [
         "email"
     ],
-    "userpoolClientLambdaRole": "amplif795a0a3e_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "amplif49321cce_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "795a0a3e",
-    "resourceName": "amplifysdkandroiddemo795a0a3e",
+    "sharedId": "49321cce",
+    "resourceName": "amplifylibiosdemo49321cce",
     "authSelections": "identityPoolAndUserPool",
     "authRoleArn": {
         "Fn::GetAtt": [
@@ -45,10 +45,22 @@
             "Arn"
         ]
     },
-    "useDefault": "default",
+    "useDefault": "defaultSocial",
+    "hostedUI": true,
     "usernameAttributes": [
         "email"
     ],
+    "triggers": "{}",
+    "hostedUIDomainName": "amplify-lib-ios-demo",
+    "authProvidersUserPool": [
+        "Facebook"
+    ],
+    "hostedUIProviderMeta": "[{\"ProviderName\":\"Facebook\",\"authorize_scopes\":\"email,public_profile\",\"AttributeMapping\":{\"email\":\"email\",\"username\":\"id\"}}]",
+    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"myapp://\"],\"LogoutURLs\":[\"myapp://\"]}",
     "userPoolGroupList": [],
+    "parentStack": {
+        "Ref": "AWS::StackId"
+    },
+    "permissions": [],
     "dependsOn": []
 }

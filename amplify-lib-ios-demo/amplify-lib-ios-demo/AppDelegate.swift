@@ -87,7 +87,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print(result)
             switch(result) {
             case .success():
-                print("Signout succeded")
+                print("Signout succeded, clearing cache")
+                //to remove cache from UIWebview (not enough not clear Cognito Auth) :-(
+//                URLCache.shared.removeAllCachedResponses()
+//                if let cookies = HTTPCookieStorage.shared.cookies {
+//                    for cookie in cookies {
+//                        print(cookie)
+//                        HTTPCookieStorage.shared.deleteCookie(cookie)
+//                    }
+//                }
             case .failure(let error):
                 print("Signout failed with \(error)")
             }

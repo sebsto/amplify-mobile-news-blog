@@ -1,6 +1,6 @@
 {
-    "resourceName": "translateText",
-    "convertPolicyName": "translateTextPolicyd0a8a50c",
+    "resourceName": "amplifylibsiosdemotranslate",
+    "convertPolicyName": "translateTextPolicyd866545b",
     "authRoleName": {
         "Ref": "AuthRoleName"
     },
@@ -10,5 +10,5 @@
     "convertType": "translateText",
     "sourceLang": "en",
     "targetLang": "fr",
-    "access": "authAndGuest"
+    "access": "auth"
 }
