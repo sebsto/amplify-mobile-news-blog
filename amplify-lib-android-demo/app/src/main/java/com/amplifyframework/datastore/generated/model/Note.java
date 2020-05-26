@@ -15,39 +15,25 @@ import com.amplifyframework.core.model.query.predicate.QueryField;
 
 import static com.amplifyframework.core.model.query.predicate.QueryField.field;
 
-/** This is an auto generated class representing the Todo type in your schema. */
+/** This is an auto generated class representing the Note type in your schema. */
 @SuppressWarnings("all")
-@ModelConfig(pluralName = "Todos")
-public final class Todo implements Model {
+@ModelConfig(pluralName = "Notes")
+public final class Note implements Model {
   public static final QueryField ID = field("id");
-  public static final QueryField NAME = field("name");
-  public static final QueryField PRIORITY = field("priority");
-  public static final QueryField DESCRIPTION = field("description");
+  public static final QueryField CONTENT = field("content");
   private final @ModelField(targetType="ID", isRequired = true) String id;
-  private final @ModelField(targetType="String", isRequired = true) String name;
-  private final @ModelField(targetType="Priority") Priority priority;
-  private final @ModelField(targetType="String") String description;
+  private final @ModelField(targetType="String", isRequired = true) String content;
   public String getId() {
       return id;
   }
   
-  public String getName() {
-      return name;
+  public String getContent() {
+      return content;
   }
   
-  public Priority getPriority() {
-      return priority;
-  }
-  
-  public String getDescription() {
-      return description;
-  }
-  
-  private Todo(String id, String name, Priority priority, String description) {
+  private Note(String id, String content) {
     this.id = id;
-    this.name = name;
-    this.priority = priority;
-    this.description = description;
+    this.content = content;
   }
   
   @Override
@@ -57,11 +43,9 @@ public final class Todo implements Model {
       } else if(obj == null || getClass() != obj.getClass()) {
         return false;
       } else {
-      Todo todo = (Todo) obj;
-      return ObjectsCompat.equals(getId(), todo.getId()) &&
-              ObjectsCompat.equals(getName(), todo.getName()) &&
-              ObjectsCompat.equals(getPriority(), todo.getPriority()) &&
-              ObjectsCompat.equals(getDescription(), todo.getDescription());
+      Note note = (Note) obj;
+      return ObjectsCompat.equals(getId(), note.getId()) &&
+              ObjectsCompat.equals(getContent(), note.getContent());
       }
   }
   
@@ -69,9 +53,7 @@ public final class Todo implements Model {
    public int hashCode() {
     return new StringBuilder()
       .append(getId())
-      .append(getName())
-      .append(getPriority())
-      .append(getDescription())
+      .append(getContent())
       .toString()
       .hashCode();
   }
@@ -79,16 +61,14 @@ public final class Todo implements Model {
   @Override
    public String toString() {
     return new StringBuilder()
-      .append("Todo {")
+      .append("Note {")
       .append("id=" + String.valueOf(getId()))
-      .append("name=" + String.valueOf(getName()))
-      .append("priority=" + String.valueOf(getPriority()))
-      .append("description=" + String.valueOf(getDescription()))
+      .append("content=" + String.valueOf(getContent()))
       .append("}")
       .toString();
   }
   
-  public static NameStep builder() {
+  public static ContentStep builder() {
       return new Builder();
   }
   
@@ -101,7 +81,7 @@ public final class Todo implements Model {
    * @return an instance of this model with only ID populated
    * @throws IllegalArgumentException Checks that ID is in the proper format
    */
-  public static Todo justId(String id) {
+  public static Note justId(String id) {
     try {
       UUID.fromString(id); // Check that ID is in the UUID format - if not an exception is thrown
     } catch (Exception exception) {
@@ -111,65 +91,43 @@ public final class Todo implements Model {
               "creating a new object, use the standard builder method and leave the ID field blank."
       );
     }
-    return new Todo(
+    return new Note(
       id,
-      null,
-      null,
       null
     );
   }
   
   public CopyOfBuilder copyOfBuilder() {
     return new CopyOfBuilder(id,
-      name,
-      priority,
-      description);
+      content);
   }
-  public interface NameStep {
-    BuildStep name(String name);
+  public interface ContentStep {
+    BuildStep content(String content);
   }
   
 
   public interface BuildStep {
-    Todo build();
+    Note build();
     BuildStep id(String id) throws IllegalArgumentException;
-    BuildStep priority(Priority priority);
-    BuildStep description(String description);
   }
   
 
-  public static class Builder implements NameStep, BuildStep {
+  public static class Builder implements ContentStep, BuildStep {
     private String id;
-    private String name;
-    private Priority priority;
-    private String description;
+    private String content;
     @Override
-     public Todo build() {
+     public Note build() {
         String id = this.id != null ? this.id : UUID.randomUUID().toString();
         
-        return new Todo(
+        return new Note(
           id,
-          name,
-          priority,
-          description);
+          content);
     }
     
     @Override
-     public BuildStep name(String name) {
-        Objects.requireNonNull(name);
-        this.name = name;
-        return this;
-    }
-    
-    @Override
-     public BuildStep priority(Priority priority) {
-        this.priority = priority;
-        return this;
-    }
-    
-    @Override
-     public BuildStep description(String description) {
-        this.description = description;
+     public BuildStep content(String content) {
+        Objects.requireNonNull(content);
+        this.content = content;
         return this;
     }
     
@@ -196,26 +154,14 @@ public final class Todo implements Model {
   
 
   public final class CopyOfBuilder extends Builder {
-    private CopyOfBuilder(String id, String name, Priority priority, String description) {
+    private CopyOfBuilder(String id, String content) {
       super.id(id);
-      super.name(name)
-        .priority(priority)
-        .description(description);
+      super.content(content);
     }
     
     @Override
-     public CopyOfBuilder name(String name) {
-      return (CopyOfBuilder) super.name(name);
-    }
-    
-    @Override
-     public CopyOfBuilder priority(Priority priority) {
-      return (CopyOfBuilder) super.priority(priority);
-    }
-    
-    @Override
-     public CopyOfBuilder description(String description) {
-      return (CopyOfBuilder) super.description(description);
+     public CopyOfBuilder content(String content) {
+      return (CopyOfBuilder) super.content(content);
     }
   }
   

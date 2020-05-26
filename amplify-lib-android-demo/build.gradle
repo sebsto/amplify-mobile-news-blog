@@ -6,7 +6,8 @@ buildscript {
     // use local maven repository to use the amplify library built from the sources
     // as per https://github.com/aws-amplify/amplify-android/blob/master/CONTRIBUTING.md
     repositories {
-        mavenLocal()
+//        mavenLocal()
+        mavenCentral()
         google()
         jcenter()
     }
