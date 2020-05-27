@@ -44,9 +44,9 @@ dependencies {
 
     // using 'master' when building the library from sources, as per
     // https://github.com/aws-amplify/amplify-android/blob/master/CONTRIBUTING.md
-    implementation 'com.amplifyframework:core:master'
-    implementation 'com.amplifyframework:aws-datastore:master'
-    implementation 'com.amplifyframework:aws-api:master'
-    implementation 'com.amplifyframework:aws-predictions:master'
-    implementation 'com.amplifyframework:aws-auth-cognito:master'
+    implementation 'com.amplifyframework:core:1.0.0'
+    implementation 'com.amplifyframework:aws-datastore:1.0.0'
+    implementation 'com.amplifyframework:aws-api:1.0.0'
+    implementation 'com.amplifyframework:aws-predictions:1.0.0'
+    implementation 'com.amplifyframework:aws-auth-cognito:1.0.0'
 }

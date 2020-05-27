@@ -1,7 +1,5 @@
 package com.amazonaws.newsblog.myapp
 
-import java.util.Calendar
-
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -22,6 +20,7 @@ import com.amplifyframework.hub.HubChannel
 import com.amplifyframework.hub.HubEvent
 import com.amplifyframework.predictions.aws.AWSPredictionsPlugin
 import com.amplifyframework.predictions.models.LanguageType
+import java.util.*
 
 
 // https://gist.github.com/TrekSoft/33190858041e6e0810d1324735bb0666
@@ -50,12 +49,72 @@ class MainActivity : AppCompatActivity() {
 
             Log.i(TAG, "Initialized Amplify")
 
+            // listen to auth event
             Amplify.Hub.subscribe(HubChannel.AUTH) {
                     hubEvent: HubEvent<*> -> Log.i("Tutorial", """HUB EVENT:${hubEvent.getName()}""")
             }
 
-        } catch (e: AmplifyException) {
+            // listen to data store subscriptions
+            // test subscriptions using the AppSync Console
+            // Query Notes
+            /**
+            query GetNotes {
+            listNotes {
+                items {
+                    id
+                    content
+                    _version
+                    _deleted
+                }
+            }}
+             */
 
+            // Mutate a note to trigger a subscription
+            /**
+            mutation CreateNote {
+            createNote(
+                input: {
+                    content: "Added through AppSync Console"
+                }
+            ) {
+                id,
+                content,
+                _deleted
+                _version,
+                _lastChangedAt,
+                }
+            }
+             */
+
+            // Delete a note
+            /**
+            mutation DeleteNote {
+                deleteNote(input: {
+                    id: "38D81154-7EF5-49EF-BD54-5476B8264DA9"
+                    _version: 2
+                }
+                ){
+                    id
+                    content
+                    _deleted
+                    _version
+                    _lastChangedAt
+                }
+            }
+             */
+
+            Amplify.DataStore.observe(
+                Note::class.java,
+                { cancelable -> Log.i( TAG, "Observation began.")  },
+                { postChanged  ->
+                    val note: Note = postChanged.item()
+                    Log.i(TAG, "== SUBSCRIPTION == Note: $note")
+                },
+                { failure -> Log.e(TAG, "Observation failed.", failure) },
+                { ->  Log.i(TAG, "Observation complete.") }
+            )
+
+        } catch (e: AmplifyException) {
             Log.e(TAG, "Could not initialize Amplify", e)
         }
     }
@@ -116,8 +175,8 @@ class MainActivity : AppCompatActivity() {
 
         Amplify.DataStore.save(
             item,
-            { success -> Log.i(TAG, "Saved item: " + success.item.content) },
-            { error -> Log.e(TAG, "Could not save item to DataStore", error) }
+            { saved -> Log.i(TAG, "Saved item: " + saved) },
+            { failure -> Log.e(TAG, "Could not save item to DataStore", failure) }
         )
     }
 
@@ -125,13 +184,12 @@ class MainActivity : AppCompatActivity() {
         Log.i(TAG, "Querying Notes")
         Amplify.DataStore.query(
             Note::class.java,
-            { notes ->
-                while (notes.hasNext()) {
-                    val note = notes.next()
-                    val name = note.content;
+            { allNotes ->
+                while (allNotes.hasNext()) {
+                    val note    = allNotes.next()
+                    val content = note.content;
 
-                    Log.i(TAG, "==== Note ====")
-                    Log.i(TAG, "Name: $name")
+                    Log.i(TAG, "==== Note ==== Content: $content")
 
                 }
             },
@@ -149,9 +207,9 @@ class MainActivity : AppCompatActivity() {
             et.text.toString(),
             LanguageType.ENGLISH,
             LanguageType.FRENCH,
-            { success ->
-                Log.i(TAG, success.translatedText)
-                tv.setText(success.translatedText)
+            { result ->
+                Log.i(TAG, result.translatedText)
+                tv.setText(result.translatedText)
             },
             { failure -> Log.e(TAG,failure.localizedMessage) }
         )
