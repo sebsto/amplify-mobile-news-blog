@@ -6,11 +6,11 @@ target 'amplify-lib-ios-demo' do
   use_frameworks!
 
   # Pods for amplify-lib-ios-demo
-    pod 'Amplify', '1.0.0-rc.1'
-    pod 'Amplify/Tools', '1.0.0-rc.1'
-    pod 'AmplifyPlugins/AWSAPIPlugin', '1.0.0-rc.1'
-    pod 'AmplifyPlugins/AWSDataStorePlugin', '1.0.0-rc.1'
-    pod 'AmplifyPlugins/AWSCognitoAuthPlugin', '1.0.0-rc.1'
-    pod 'AWSPredictionsPlugin', '1.0.0-rc.1'
+    pod 'Amplify', '1.0.0'
+    pod 'Amplify/Tools', '1.0.0'
+    pod 'AmplifyPlugins/AWSAPIPlugin', '1.0.0'
+    pod 'AmplifyPlugins/AWSDataStorePlugin', '1.0.0'
+    pod 'AmplifyPlugins/AWSCognitoAuthPlugin', '1.0.0'
+    pod 'AWSPredictionsPlugin', '1.0.0'
 
 end

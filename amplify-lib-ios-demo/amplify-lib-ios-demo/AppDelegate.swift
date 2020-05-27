@@ -61,6 +61,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     items {
                         id
                         content
+                        _version
                         _deleted
                     }
                 }
@@ -76,17 +77,45 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                  ) {
                      id,
                      content,
+                     _deleted
                      _version,
                      _lastChangedAt,
                  }
              }
              */
-            _ = Amplify.DataStore.publisher(for: Note.self)
-            .sink(receiveCompletion: { completion in
-                print("Subscription has been completed: \(completion)")
-            }, receiveValue: { mutationEvent in
-                print("Subscription got this value: \(mutationEvent)")
-            })
+            
+            // Delete a note
+            /**
+             mutation DeleteNote {
+               deleteNote(input: {
+                 id: "38D81154-7EF5-49EF-BD54-5476B8264DA9"
+                 _version: 2
+               }
+               ){
+                 id
+                 content
+                 _deleted
+                 _version
+                 _lastChangedAt
+               }
+             }
+             */
+            
+//            let postSubscription = Amplify.DataStore
+            _ = Amplify.DataStore
+                .publisher(for: Note.self)
+                .sink(receiveCompletion: { completion in
+                    if case .failure(let error) = completion {
+                        print("Subscription received error - \(error.localizedDescription)")
+                    }
+                })
+                { changes in
+                    // handle incoming changes
+                    print("Subscription received mutation: \(changes)")
+                }
+            
+            // When finished observing
+//            postSubscription.cancel()
             
         } catch {
             print("Failed to configure Amplify \(error)")
@@ -134,6 +163,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     }
     
+
     // MARK: Amplify DataStore
 
     func query() {
