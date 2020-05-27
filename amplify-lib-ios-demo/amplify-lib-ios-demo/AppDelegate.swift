@@ -12,6 +12,7 @@ import AuthenticationServices
 import Amplify
 import AmplifyPlugins
 import AWSPredictionsPlugin
+import Combine
 
 class UserData: ObservableObject {
     @Published var translatedText = ""
@@ -22,6 +23,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     public let data = UserData()
     
+    var publisher : AnyPublisher<MutationEvent, DataStoreError>?
+    var cancellabeSubscription : AnyCancellable?
+
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         do {
@@ -52,78 +56,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
             }
             
-            // listen to data store subscriptions
-            // test subscriptions using the AppSync Console
-            // Query Notes
-            /**
-                query GetNotes {
-                listNotes {
-                    items {
-                        id
-                        content
-                        _version
-                        _deleted
-                    }
-                }
-            */
-            
-            // Mutate a note to trigger a subscription
-            /**
-             mutation CreateNote {
-                 createNote(
-                     input: {
-                     content: "Added through AppSync Console"
-                     }
-                 ) {
-                     id,
-                     content,
-                     _deleted
-                     _version,
-                     _lastChangedAt,
-                 }
-             }
-             */
-            
-            // Delete a note
-            /**
-             mutation DeleteNote {
-               deleteNote(input: {
-                 id: "38D81154-7EF5-49EF-BD54-5476B8264DA9"
-                 _version: 2
-               }
-               ){
-                 id
-                 content
-                 _deleted
-                 _version
-                 _lastChangedAt
-               }
-             }
-             */
-            
-//            let postSubscription = Amplify.DataStore
-            _ = Amplify.DataStore
-                .publisher(for: Note.self)
-                .sink(receiveCompletion: { completion in
-                    if case .failure(let error) = completion {
-                        print("Subscription received error - \(error.localizedDescription)")
-                    }
-                })
-                { changes in
-                    // handle incoming changes
-                    print("Subscription received mutation: \(changes)")
-                }
-            
-            // When finished observing
-//            postSubscription.cancel()
+            // start a subscription to DataStore events
+            subscribe()
             
         } catch {
             print("Failed to configure Amplify \(error)")
         }
-        
+
         return true
     }
-    
+        
     // MARK: Amplify Auth
     
     func signIn() {
@@ -162,8 +104,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
     }
-    
-
+     
     // MARK: Amplify DataStore
 
     func query() {
@@ -195,6 +136,83 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 print("Error adding note - \(error.localizedDescription)")
             }
         }
+    }
+        
+    func subscribe() {
+        
+        // listen to data store subscriptions
+        // test subscriptions using the AppSync Console
+        // Query Notes
+        /**
+            query GetNotes {
+            listNotes {
+                items {
+                    id
+                    content
+                    _version
+                    _deleted
+                }
+            }
+        */
+        
+        // Mutate a note to trigger a subscription
+        /**
+         mutation CreateNote {
+             createNote(
+                 input: {
+                 content: "Added through AppSync Console"
+                 }
+             ) {
+                 id,
+                 content,
+                 _deleted
+                 _version,
+                 _lastChangedAt,
+             }
+         }
+         */
+        
+        // Delete a note
+        /**
+         mutation DeleteNote {
+           deleteNote(input: {
+             id: "38D81154-7EF5-49EF-BD54-5476B8264DA9"
+             _version: 2
+           }
+           ){
+             id
+             content
+             _deleted
+             _version
+             _lastChangedAt
+           }
+         }
+         */
+        
+        self.publisher = Amplify.DataStore.publisher(for: Note.self)
+        guard let p = self.publisher else {
+            print("== SUB == Can not create publisher")
+            return
+        }
+        
+        self.cancellabeSubscription = p.sink(receiveCompletion:
+            { completion in
+                if case .failure(let error) = completion {
+                    print("== SUB ==  error - \(error.localizedDescription)")
+                }
+            })
+            { changes in
+                // handle incoming changes
+                print("== SUB == received mutation: \(changes)")
+            }
+        
+        // When finished observing
+//        guard let c = self.cancellabeSubscription else {
+//            print("== SUB == Can not cancel publisher")
+//            return
+//        }
+//        c.cancel()
+            
     }
 
     // MARK: Amplify Predictions
