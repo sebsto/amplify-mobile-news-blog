@@ -23,8 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     public let data = UserData()
     
-    var publisher : AnyPublisher<MutationEvent, DataStoreError>?
-    var cancellabeSubscription : AnyCancellable?
+    var notesSubscription : AnyCancellable?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
@@ -104,7 +103,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
     }
-     
+  
     // MARK: Amplify DataStore
 
     func query() {
@@ -189,30 +188,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
          }
          */
         
-        self.publisher = Amplify.DataStore.publisher(for: Note.self)
-        guard let p = self.publisher else {
-            print("== SUB == Can not create publisher")
+        self.notesSubscription = Amplify.DataStore.publisher(for: Note.self)
+            .sink(receiveCompletion:
+                { completion in
+                    if case .failure(let error) = completion {
+                        print("== SUB ==  error - \(error.localizedDescription)")
+                    }
+                })
+                { changes in
+                    // handle incoming changes
+                    print("== SUB == received mutation: \(changes)")
+                }
+    }
+    
+    // not called
+    // to be called when the app does not need to receive change notification
+    func cancelSubscription() {
+        // When finished observing
+        guard let c = self.notesSubscription else {
+            print("== SUB == Can not cancel publisher")
             return
         }
-        
-        self.cancellabeSubscription = p.sink(receiveCompletion:
-            { completion in
-                if case .failure(let error) = completion {
-                    print("== SUB ==  error - \(error.localizedDescription)")
-                }
-            })
-            { changes in
-                // handle incoming changes
-                print("== SUB == received mutation: \(changes)")
-            }
-        
-        // When finished observing
-//        guard let c = self.cancellabeSubscription else {
-//            print("== SUB == Can not cancel publisher")
-//            return
-//        }
-//        c.cancel()
-            
+        c.cancel()
     }
 
     // MARK: Amplify Predictions
